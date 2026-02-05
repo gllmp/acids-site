@@ -1,83 +1,74 @@
-# Astro & Tailwind CSS Starter Kit
+# ACIDS - Website
 
-by https://lexingtonthemes.com
+Website for **ACIDS**, a collective working across music, technology, and artistic R&D.
+
+This project is based on the **Swissfolio** Astro + Tailwind CSS template and has been modified to fit the needs and identity of the ACIDS collective.
+
+---
 
 ## License
 
-This template is open-source software licensed under the [GPL-3.0 license](https://opensource.org/licenses/GPL-3.0). Feel free to fork, modify, and use it in your projects.
-## Before using this template publicly, please ensure you remove my name and any links associated with me from the website.
+This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
 
+It is a derivative work of the Swissfolio template:
+https://github.com/michael-andreuzza/swissfolio
 
-## This template is using Tailwind CSS V4
+In accordance with the GPL-3.0 license:
+- The source code of this website is publicly available
+- Modifications and redistributions remain under the same license
 
-Now we are using only a CSS file. It's called `global.css` and it's located in the src/styles folder. Now we are eimporting Tailwind CSS on the same file instead of using the `tailwind.config.cjs` file. Like this:
+See the `LICENSE` file for details.
+
+---
+
+## Tech Stack
+
+- Astro
+- Tailwind CSS v4
+- AOS (Animate On Scroll)
+
+Tailwind CSS is used via a single global stylesheet:
 
 ```css
-// Importing Tailwind CSS
 @import "tailwindcss";
-// Importing Tailwind plugins
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
 ```
-This template is open-source software licensed under the [GPL-3.0 license](https://opensource.org/licenses/GPL-3.0). Feel free to fork, modify, and use it in your projects.
-## Need an attribution-free version?
 
-Checkout [Lexington Themes](https://lexingtonthemes.com/) for free and premium multipage themes & UI Kits
-For freelancers, developers, businesses, and personal use.
-Beautifully crafted with Astro.js, and Tailwind CSS - Simple & easy to customise.
+Custom styles are defined using the `@theme` directive in `src/styles/global.css`.
 
-## This template is using Tailwind CSS V4
+---
 
-Now we are using only a CSS file. It's called `global.css` and it's located in the src/styles folder. Now we are eimporting Tailwind CSS on the same file instead of using the `tailwind.config.cjs` file. Like this:
+## Project Structure
 
-```css
-// Importing Tailwind CSS
-@import "tailwindcss";
-// Importing Tailwind plugins
-@plugin "@tailwindcss/typography";
-@plugin "@tailwindcss/forms";
-Then to add your styles you will use the @theme directive. Like this:
-
-```css
-@theme {
-  /* Your CSS goes here, see how styles are written on the global.css file */
-}
-```
-
-Remember this is just in Alpha version, so you can use it as you want. Just keep an eye on the changes that Tailwind CSS is going to make.
-
-## Template Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```
+```text
 /
 ├── public/
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/
+│   ├── layouts/
+│   ├── pages/
+│   └── styles/
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Development
 
-Any static assets, like images, can be placed in the `public/` directory.
+All commands are run from the root of the project.
 
-## Commands
+| Command | Description |
+| ------ | ----------- |
+| `npm install` | Install dependencies |
+| `npm run dev` | Start local dev server |
+| `npm run build` | Build production site |
+| `npm run preview` | Preview production build |
 
-All commands are run from the root of the project, from a terminal:
+---
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `npm install`          | Installs dependencies                            |
-| `npm run dev`          | Starts local dev server at `localhost:3000`      |
-| `npm run build`        | Build your production site to `./dist/`          |
-| `npm run preview`      | Preview your build locally, before deploying     |
-| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro --help` | Get help using the Astro CLI                     |
+## Notes
 
-## Want to learn more?
+This repository is public in order to comply with the GPL-3.0 license requirements.
 
-Feel free to check Astroäs [documentation](https://docs.astro.build)
+Content, branding, and visuals are specific to ACIDS.
