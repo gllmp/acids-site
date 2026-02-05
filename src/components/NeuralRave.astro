@@ -1,0 +1,135 @@
+<div class="rave-widget" aria-hidden="true">
+  <canvas id="rave-canvas"></canvas>
+</div>
+
+<style>
+  .rave-widget {
+    width: 500px;
+    height: 280px;
+    pointer-events: none;
+  }
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+</style>
+
+<script is:inline>
+(() => {
+  const canvas = document.getElementById("rave-canvas");
+  const ctx = canvas.getContext("2d");
+
+  function resize() {
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = canvas.clientWidth * dpr;
+    canvas.height = canvas.clientHeight * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  resize();
+  window.addEventListener("resize", resize);
+
+  const W = () => canvas.clientWidth;
+  const H = () => canvas.clientHeight;
+
+  const SAFE_X = 36;
+  const SAFE_Y = 44;
+
+  const N = 16;
+  const nodes = [];
+  const edges = [];
+
+  const rand = (a, b) => a + Math.random() * (b - a);
+
+  const cx = () => W() * 0.5;
+  const cy = () => H() * 0.5;
+  const R = () => Math.min(W(), H()) * 0.38;
+
+  for (let i = 0; i < N; i++) {
+    const a = (i / N) * Math.PI * 2;
+    nodes.push({
+      x: cx() + Math.cos(a) * R() * rand(0.85, 1.05),
+      y: cy() + Math.sin(a) * R() * rand(0.85, 1.05),
+      vx: rand(-0.8, 0.8),
+      vy: rand(-0.8, 0.8),
+      phase: rand(0, Math.PI * 2),
+    });
+  }
+
+  for (let i = 0; i < N; i++) {
+    for (let j = i + 1; j < N; j++) {
+      if (Math.random() < 0.4) edges.push([i, j]);
+    }
+  }
+
+  let t = 0;
+
+  function frame() {
+    t += 0.018;
+    ctx.clearRect(0, 0, W(), H());
+
+    ctx.strokeStyle = "rgba(0,0,0,0.85)";
+    ctx.fillStyle = "rgba(0,0,0,0.95)";
+
+    nodes.forEach((n, i) => {
+      const a =
+        (i / N) * Math.PI * 2 +
+        Math.sin(t + n.phase) * 0.45;
+
+      const r =
+        R() *
+        (0.9 + 0.1 * Math.sin(t * 1.9 + i));
+
+      const tx = cx() + Math.cos(a) * r;
+      const ty = cy() + Math.sin(a) * r;
+
+      n.vx += (tx - n.x) * 0.022;
+      n.vy += (ty - n.y) * 0.022;
+
+      n.vx *= 0.82;
+      n.vy *= 0.82;
+
+      n.x += n.vx;
+      n.y += n.vy;
+
+      n.x = Math.max(SAFE_X, Math.min(W() - SAFE_X, n.x));
+      n.y = Math.max(SAFE_Y, Math.min(H() - SAFE_Y, n.y));
+    });
+
+    edges.forEach(([a, b], i) => {
+      const A = nodes[a];
+      const B = nodes[b];
+      const pulse = 0.4 + 0.6 * Math.abs(Math.sin(t * 2.8 + i));
+
+      ctx.globalAlpha = pulse * 0.5;
+      ctx.lineWidth = 1.1 + pulse * 0.9;
+
+      ctx.beginPath();
+      ctx.moveTo(A.x, A.y);
+      ctx.lineTo(B.x, B.y);
+      ctx.stroke();
+    });
+
+    ctx.globalAlpha = 1;
+
+    nodes.forEach((n, i) => {
+      const pulse = 0.6 + 0.4 * Math.abs(Math.sin(t * 3.2 + i));
+      ctx.beginPath();
+      ctx.arc(
+        n.x,
+        n.y,
+        1.3 + pulse * 0.9,
+        0,
+        Math.PI * 2
+      );
+      ctx.fill();
+    });
+
+    requestAnimationFrame(frame);
+  }
+
+  frame();
+})();
+</script>
